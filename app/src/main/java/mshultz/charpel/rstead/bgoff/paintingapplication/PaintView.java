@@ -25,6 +25,8 @@ public class PaintView extends View {
     private Path path;
     private Bitmap bitmap;
     private Canvas canvas;
+    private float lastX;
+    private float lastY;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -49,7 +51,21 @@ public class PaintView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        path.moveTo(event.getX(), event.getY());
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                path.moveTo(event.getX(), event.getY());
+                lastX = event.getX();
+                lastY = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                path.lineTo(lastX, lastY);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float avgX = (event.getX() + lastX) / 2;
+                float avgY = (event.getY() + lastY) / 2;
+                path.quadTo(lastX, lastY, avgX, avgY);
+                break;
+        }
         invalidate();
         return true;
     }
