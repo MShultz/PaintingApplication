@@ -36,7 +36,8 @@ public class PaintView extends View {
 
 
     public void clearCanvas() {
-
+        path.reset();
+        invalidate();
     }
 
     @Override
