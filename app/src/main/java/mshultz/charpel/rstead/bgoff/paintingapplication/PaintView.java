@@ -32,7 +32,11 @@ public class PaintView extends View {
         super(context, attrs);
         this.setContext(context);
         path = new Path();
-
+        painter = new Paint();
+        painter.setColor(Color.BLACK);
+        painter.setStyle(Paint.Style.STROKE);
+        painter.setStrokeJoin(Paint.Join.ROUND);
+        painter.setStrokeWidth(4f);
         initializePainter();
         initializeCanvas();
     }
