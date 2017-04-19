@@ -68,6 +68,8 @@ public class PaintView extends View {
                 float avgX = (event.getX() + lastX) / 2;
                 float avgY = (event.getY() + lastY) / 2;
                 path.quadTo(lastX, lastY, avgX, avgY);
+                lastX = event.getX();
+                lastY = event.getY();
                 break;
         }
         invalidate();
