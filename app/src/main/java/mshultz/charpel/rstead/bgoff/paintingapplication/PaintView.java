@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -36,18 +37,21 @@ public class PaintView extends View {
 
 
     public void clearCanvas() {
-
+        path.reset();
+        invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        super.onDraw(canvas);
+        canvas.drawPath(path, painter);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        return false;
+        path.moveTo(event.getX(), event.getY());
+        invalidate();
+        return true;
     }
 
     private void setContext(Context context) {
