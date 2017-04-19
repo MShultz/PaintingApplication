@@ -42,27 +42,15 @@ public class PaintView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        super.onDraw(canvas);
+        canvas.drawPath(path, painter);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        switch(event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-
-                break;
-            case MotionEvent.ACTION_UP:
-                
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            default:
-                Log.i("MotionEvent", "Unhandled Motion Event");
-                break;
-        }
+        path.moveTo(event.getX(), event.getY());
         invalidate();
-        return false;
+        return true;
     }
 
     private void setContext(Context context) {
