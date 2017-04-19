@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -46,6 +47,20 @@ public class PaintView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+
+                break;
+            case MotionEvent.ACTION_UP:
+                
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            default:
+                Log.i("MotionEvent", "Unhandled Motion Event");
+                break;
+        }
+        invalidate();
         return false;
     }
 
