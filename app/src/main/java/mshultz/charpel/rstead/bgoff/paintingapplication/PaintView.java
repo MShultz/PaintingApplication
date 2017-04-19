@@ -1,6 +1,7 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,16 +17,44 @@ import android.view.View;
 
 public class PaintView extends View {
 
+    private final int BIT_HEIGHT = 1700;
+    private final int BIT_WIDTH = 1080;
     private Context context;
     private Paint painter;
     private Path path;
+    private Bitmap bitmap;
+    private Canvas canvas;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
         this.setContext(context);
         path = new Path();
 
+        initializePainter();
+        initializeCanvas();
+    }
+
+
+    public void clearCanvas() {
+
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        return false;
+    }
+
+    private void setContext(Context context) {
+        this.context = context;
+    }
+
+    private void initializePainter() {
         painter = new Paint();
         painter.setAntiAlias(true);
         painter.setColor(Color.BLACK);
@@ -34,22 +63,8 @@ public class PaintView extends View {
         painter.setStrokeWidth(5f);
     }
 
-
-    public void clearCanvas(){
-
-    }
-    @Override
-    protected void onDraw(Canvas canvas){
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-
-        return false;
-    }
-
-    private void setContext(Context context){
-        this.context = context;
+    private void initializeCanvas() {
+        bitmap = Bitmap.createBitmap(BIT_WIDTH, BIT_HEIGHT, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
     }
 }
