@@ -5,9 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="mshultz.charpel.rstead.bgoff.paintingapplication.MainActivity">
+
     <mshultz.charpel.rstead.bgoff.paintingapplication.PaintView
         android:id="@+id/signature_canvas"
         android:layout_width="match_parent"
-        android:textColor = "#FFFFFF"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="setColor"
+        android:text="Button" />
+
 </FrameLayout>
+
