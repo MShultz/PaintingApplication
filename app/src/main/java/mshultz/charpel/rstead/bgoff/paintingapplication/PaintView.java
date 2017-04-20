@@ -12,12 +12,16 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by Mary on 4/19/2017.
  */
 
 public class PaintView extends View {
 
+    private final float DEFAULT_BRUSH_SIZE = 4f;
     private final int BIT_HEIGHT = 1700;
     private final int BIT_WIDTH = 1080;
     private Context context;
@@ -27,35 +31,42 @@ public class PaintView extends View {
     private Canvas canvas;
     private float lastX;
     private float lastY;
+    private ArrayList<Stroke> archivedStrokes;
+    private int currentColor;
+    private float currentSize;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        currentColor = Color.BLACK;
+        currentSize = DEFAULT_BRUSH_SIZE;
+        archivedStrokes = new ArrayList<>();
         this.setContext(context);
         path = new Path();
-        painter = new Paint();
-        painter.setColor(Color.BLACK);
-        painter.setStyle(Paint.Style.STROKE);
-        painter.setStrokeJoin(Paint.Join.ROUND);
-        painter.setStrokeWidth(4f);
         initializePainter();
         initializeCanvas();
+        archivedStrokes.add(new Stroke(path, painter));
     }
 
 
     public void clearCanvas() {
         path.reset();
+        archivedStrokes = new ArrayList<>();
+        archivedStrokes.add(new Stroke(path, painter));
         invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawPath(path, painter);
+        for(Stroke currentStroke: archivedStrokes){
+            canvas.drawPath(currentStroke.getPath(), currentStroke.getPaint());
+        }
+
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 path.moveTo(event.getX(), event.getY());
                 lastX = event.getX();
@@ -83,14 +94,46 @@ public class PaintView extends View {
     private void initializePainter() {
         painter = new Paint();
         painter.setAntiAlias(true);
-        painter.setColor(Color.BLACK);
+        painter.setColor(currentColor);
         painter.setStrokeJoin(Paint.Join.ROUND);
         painter.setStyle(Paint.Style.STROKE);
-        painter.setStrokeWidth(5f);
+        painter.setStrokeWidth(currentSize);
+    }
+    private void initializePainter(int color) {
+        this.currentColor = color;
+        painter = new Paint();
+        painter.setAntiAlias(true);
+        painter.setColor(color);
+        painter.setStrokeJoin(Paint.Join.ROUND);
+        painter.setStyle(Paint.Style.STROKE);
+        painter.setStrokeWidth(currentSize);
+    }
+
+    private void initializePainter(float brushSize) {
+        this.currentSize = brushSize;
+        painter = new Paint();
+        painter.setAntiAlias(true);
+        painter.setColor(currentColor);
+        painter.setStrokeJoin(Paint.Join.ROUND);
+        painter.setStyle(Paint.Style.STROKE);
+        painter.setStrokeWidth(currentSize);
     }
 
     private void initializeCanvas() {
         bitmap = Bitmap.createBitmap(BIT_WIDTH, BIT_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+    }
+
+    public void setColor(int a, int r, int g, int b) {
+        path = new Path();
+        initializePainter(Color.argb(a, r, g, b));
+        archivedStrokes.add(new Stroke(path, painter));
+
+    }
+
+    public void setBrushSize(float brushSize){
+        path = new Path();
+        initializePainter(brushSize);
+        archivedStrokes.add(new Stroke(path, painter));
     }
 }
