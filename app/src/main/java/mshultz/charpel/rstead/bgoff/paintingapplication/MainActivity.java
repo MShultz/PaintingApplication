@@ -1,12 +1,17 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setColor(View view){ paintView.setColor(255, 255, 219,225);}
     public void setBrushSize(View view){paintView.setBrushSize(15f);}
+
+    public void setBrushShape(View view){
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.lips);
+        paintView.setBrushImage(image);
+    }
 
     public void openDrawer(View view){
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
