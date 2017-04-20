@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -34,9 +36,11 @@ public class PaintView extends View {
     private ArrayList<Stroke> archivedStrokes;
     private int currentColor;
     private float currentSize;
+    private int backgroundColor;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        backgroundColor = Color.WHITE;
         currentColor = Color.BLACK;
         currentSize = DEFAULT_BRUSH_SIZE;
         archivedStrokes = new ArrayList<>();
@@ -134,6 +138,12 @@ public class PaintView extends View {
     public void setBrushSize(float brushSize){
         path = new Path();
         initializePainter(brushSize);
+        archivedStrokes.add(new Stroke(path, painter));
+    }
+
+    public void setEraser(){
+        path = new Path();
+        initializePainter(backgroundColor);
         archivedStrokes.add(new Stroke(path, painter));
     }
 }

@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setColor(View view){ paintView.setColor(255, 255, 219,225);}
     public void setBrushSize(View view){paintView.setBrushSize(15f);}
+    public void setEraser(View view){paintView.setEraser();}
 
     public void openDrawer(View view){
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);

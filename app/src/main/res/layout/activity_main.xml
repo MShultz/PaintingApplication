@@ -82,6 +82,7 @@
                     android:onClick="setBrushSize"
                     android:text="Brush"
                     android:visibility="visible" />
+
             </TableRow>
 
         </TableLayout>
