@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class PaintView extends View {
 
+    private final float DEFAULT_BRUSH_SIZE = 4f;
     private final int BIT_HEIGHT = 1700;
     private final int BIT_WIDTH = 1080;
     private Context context;
@@ -31,13 +32,17 @@ public class PaintView extends View {
     private float lastX;
     private float lastY;
     private ArrayList<Stroke> archivedStrokes;
+    private int currentColor;
+    private float currentSize;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        currentColor = Color.BLACK;
+        currentSize = DEFAULT_BRUSH_SIZE;
         archivedStrokes = new ArrayList<>();
         this.setContext(context);
         path = new Path();
-        initializePainter(Color.BLACK);
+        initializePainter();
         initializeCanvas();
         archivedStrokes.add(new Stroke(path, painter));
     }
@@ -45,6 +50,8 @@ public class PaintView extends View {
 
     public void clearCanvas() {
         path.reset();
+        archivedStrokes = new ArrayList<>();
+        archivedStrokes.add(new Stroke(path, painter));
         invalidate();
     }
 
@@ -84,13 +91,32 @@ public class PaintView extends View {
         this.context = context;
     }
 
+    private void initializePainter() {
+        painter = new Paint();
+        painter.setAntiAlias(true);
+        painter.setColor(currentColor);
+        painter.setStrokeJoin(Paint.Join.ROUND);
+        painter.setStyle(Paint.Style.STROKE);
+        painter.setStrokeWidth(currentSize);
+    }
     private void initializePainter(int color) {
+        this.currentColor = color;
         painter = new Paint();
         painter.setAntiAlias(true);
         painter.setColor(color);
         painter.setStrokeJoin(Paint.Join.ROUND);
         painter.setStyle(Paint.Style.STROKE);
-        painter.setStrokeWidth(5f);
+        painter.setStrokeWidth(currentSize);
+    }
+
+    private void initializePainter(float brushSize) {
+        this.currentSize = brushSize;
+        painter = new Paint();
+        painter.setAntiAlias(true);
+        painter.setColor(currentColor);
+        painter.setStrokeJoin(Paint.Join.ROUND);
+        painter.setStyle(Paint.Style.STROKE);
+        painter.setStrokeWidth(currentSize);
     }
 
     private void initializeCanvas() {
@@ -100,8 +126,14 @@ public class PaintView extends View {
 
     public void setColor(int a, int r, int g, int b) {
         path = new Path();
-       initializePainter(Color.argb(a, r, g, b));
+        initializePainter(Color.argb(a, r, g, b));
         archivedStrokes.add(new Stroke(path, painter));
 
+    }
+
+    public void setBrushSize(float brushSize){
+        path = new Path();
+        initializePainter(brushSize);
+        archivedStrokes.add(new Stroke(path, painter));
     }
 }

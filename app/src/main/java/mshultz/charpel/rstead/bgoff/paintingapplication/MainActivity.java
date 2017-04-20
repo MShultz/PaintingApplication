@@ -21,4 +21,5 @@ public class MainActivity extends AppCompatActivity {
         paintView.clearCanvas();
     }
     public void setColor(View view){ paintView.setColor(255, 255, 219,225);}
+    public void setBrushSize(View view){paintView.setBrushSize(15f);}
 }
