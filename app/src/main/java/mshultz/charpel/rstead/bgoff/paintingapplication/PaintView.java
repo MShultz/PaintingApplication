@@ -1,19 +1,29 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Mary on 4/19/2017.
@@ -27,7 +37,7 @@ public class PaintView extends View {
     private Context context;
     private Paint painter;
     private Path path;
-    private Bitmap bitmap;
+    public Bitmap bitmap;
     private Canvas canvas;
     private float lastX;
     private float lastY;
@@ -135,5 +145,37 @@ public class PaintView extends View {
         path = new Path();
         initializePainter(brushSize);
         archivedStrokes.add(new Stroke(path, painter));
+    }
+    public void save(ContentResolver resolver){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+//        String test= MediaStore.Images.Media.insertImage(resolver,bitmap.compress(Bitmap.CompressFormat.JPEG, 100), dateFormat.format(date), "From Paint app");
+//        if(test!=null){
+//            Toast.makeText(getContext(),"Save Sucess",Toast.LENGTH_LONG).show();
+//        }
+//        else {
+//            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+//        }
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream("storage/emulated/0/");
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+            Toast.makeText(getContext(),"Save Sucess",Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+            }
+        }
+
+
     }
 }
