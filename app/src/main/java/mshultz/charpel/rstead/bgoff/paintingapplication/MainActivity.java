@@ -21,10 +21,9 @@ import android.widget.TextView;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity implements SliderDialogue.SliderDialogueListener {
+public class MainActivity extends AppCompatActivity implements SliderDialogue.SliderDialogueListener, BrushPropsDialogue.BrushPropsListener{
     DialogFragment dialogue;
     private PaintView paintView;
-    private SeekBar redSlider, greenSlider, blueSlider;
     private int redValue = 255, greenValue = 255, blueValue = 255;
 
     @Override
@@ -49,20 +48,24 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
 
     public void setColor(View view) {
         dialogue = new SliderDialogue();
-        dialogue.show(getFragmentManager(), "Hello");
+        dialogue.show(getFragmentManager(), "ColorProps");
     }
 
-
     public void setBrushSize(View view) {
-        paintView.setBrushSize(15f);
+        dialogue = new BrushPropsDialogue();
+        dialogue.show(getFragmentManager(), "BrushProps");
     }
 
     @Override
-    public void onOKClick(DialogFragment dialog) {
+    public void onColorOkClick(DialogFragment dialog) {
         redValue = ((SliderDialogue) dialogue).getRedValue();
         blueValue = ((SliderDialogue) dialogue).getBlueValue();
         greenValue = ((SliderDialogue) dialogue).getGreenValue();
         paintView.setColor(255, redValue, greenValue, blueValue);
     }
 
+    @Override
+    public void onBrushPropOKClick(DialogFragment dialog) {
+        paintView.setBrushSize(((BrushPropsDialogue)dialogue).getBrushSize());
+    }
 }
