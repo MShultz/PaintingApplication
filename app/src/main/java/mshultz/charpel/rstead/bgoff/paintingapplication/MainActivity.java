@@ -43,7 +43,26 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
     }
 
     public void setBrushShape(View view) {
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.lips);
+        int id = 0;
+
+        switch(view.getId()){
+            case R.id.lips:
+                id = R.drawable.lips;
+                break;
+            case R.id.filledStar:
+                id = R.drawable.black_star;
+                break;
+            case R.id.emptyStar:
+                id = R.drawable.open_star;
+                break;
+            case R.id.heart:
+                id = R.drawable.filled_heart;
+                break;
+            default:
+                throw new IllegalArgumentException("NO SUCH ID!");
+        }
+
+        Bitmap image = BitmapFactory.decodeResource(getResources(), id);
         paintView.setBrushImage(image, 20);
     }
 
