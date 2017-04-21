@@ -77,6 +77,7 @@ public class PaintView extends View {
             case MotionEvent.ACTION_DOWN:
                 if(isUsingBitmap){
                     archivedStrokes.add(new ImageStroke(currentStamp));
+                    addPointToBitmapStroke((int)event.getX(), (int)event.getY());
                 }else{
                     path.moveTo(event.getX(), event.getY());
                     lastX = event.getX();
@@ -89,9 +90,7 @@ public class PaintView extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(isUsingBitmap){
-                    int width = ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getWidth();
-                    int height = ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getHeight();
-                    ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getPath().add(new Point((int)event.getX() - width / 2, (int)event.getY() - height / 2));
+                    addPointToBitmapStroke((int)event.getX(), (int)event.getY());
                 }else{
                     float avgX = (event.getX() + lastX) / 2;
                     float avgY = (event.getY() + lastY) / 2;
@@ -108,6 +107,12 @@ public class PaintView extends View {
 
     private void setContext(Context context) {
         this.context = context;
+    }
+
+    private void addPointToBitmapStroke(int x, int y){
+        int width = ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getWidth();
+        int height = ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getHeight();
+        ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getPath().add(new Point(x - width / 2, y - height / 2));
     }
 
     private void initializePainter() {
@@ -158,8 +163,8 @@ public class PaintView extends View {
         isUsingBitmap = false;
     }
 
-    public void setBrushImage(Bitmap bitmap){
-        currentStamp = bitmap;
+    public void setBrushImage(Bitmap bitmap, int dimension){
+        currentStamp = Bitmap.createScaledBitmap(bitmap, dimension, dimension, false);
         isUsingBitmap = true;
     }
 

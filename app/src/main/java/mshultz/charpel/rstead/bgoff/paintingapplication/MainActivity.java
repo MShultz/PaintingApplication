@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
 
     public void setBrushShape(View view) {
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.lips);
-        paintView.setBrushImage(image);
+        paintView.setBrushImage(image, 20);
     }
 
     public void setColor(View view) {
