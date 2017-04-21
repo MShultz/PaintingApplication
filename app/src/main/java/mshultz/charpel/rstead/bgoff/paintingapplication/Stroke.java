@@ -1,5 +1,6 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
@@ -7,7 +8,7 @@ import android.graphics.Path;
  * Created by Mary on 4/19/2017.
  */
 
-public class Stroke {
+public class Stroke implements Paintable{
     Path path;
     Paint paint;
     public Stroke(Path path, Paint paint){
@@ -29,5 +30,10 @@ public class Stroke {
 
     public Paint getPaint(){
         return paint;
+    }
+
+    @Override
+    public void paintStroke(Canvas canvas){
+        canvas.drawPath(getPath(), getPaint());
     }
 }
