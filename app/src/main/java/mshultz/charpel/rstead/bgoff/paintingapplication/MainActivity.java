@@ -28,8 +28,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
-
 public class MainActivity extends AppCompatActivity implements SliderDialogue.SliderDialogueListener {
     DialogFragment dialogue;
     private PaintView paintView;
