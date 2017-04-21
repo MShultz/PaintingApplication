@@ -18,12 +18,14 @@ import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements SliderDialogue.SliderDialogueListener, BrushPropsDialogue.BrushPropsListener{
     DialogFragment dialogue;
     private PaintView paintView;
+    private int brushType;
     private int redValue = 255, greenValue = 255, blueValue = 255;
 
     @Override
@@ -41,28 +43,41 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         paintView.setEraser();
     }
 
-    public void setBrushShape(View view) {
-        int id = 0;
+    public void onShapeClick(View view){
 
-        switch(view.getId()){
+        int id = view.getId();
+        switch(id){
             case R.id.lips:
-                id = R.drawable.lips;
+                brushType = R.drawable.lips;
                 break;
             case R.id.filledStar:
-                id = R.drawable.black_star;
+                brushType = R.drawable.black_star;
                 break;
             case R.id.emptyStar:
-                id = R.drawable.open_star;
+                brushType = R.drawable.open_star;
                 break;
             case R.id.heart:
-                id = R.drawable.filled_heart;
+                brushType = R.drawable.filled_heart;
+                break;
+            case R.id.defaultBrush:
+                brushType = 0;
                 break;
             default:
                 throw new IllegalArgumentException("NO SUCH ID!");
         }
+    }
 
-        Bitmap image = BitmapFactory.decodeResource(getResources(), id);
-        paintView.setBrushImage(image, 20);
+    public void setBrushShape(int id) {
+        if(id != 0) {
+            Bitmap image = BitmapFactory.decodeResource(getResources(), id);
+            paintView.setBrushImage(image, 20);
+        }else{
+            paintView.setUsingBitmap(false);
+        }
+    }
+
+    public void onSaveClick(View view){
+        Toast.makeText(this, "Chris doesn't have this button implemented yet!", Toast.LENGTH_SHORT).show();
     }
 
     public void setColor(View view) {
@@ -86,5 +101,6 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
     @Override
     public void onBrushPropOKClick(DialogFragment dialog) {
         paintView.setBrushSize(((BrushPropsDialogue)dialogue).getBrushSize());
+        setBrushShape(brushType);
     }
 }

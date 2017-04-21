@@ -27,10 +27,16 @@ public class BrushPropsDialogue extends DialogFragment {
 
     private float brushSize = 5f;
 
+    private int brushType;
+
     private View activity;
 
     public float getBrushSize() {
         return brushSize;
+    }
+
+    public int getBrushType(){
+        return brushType;
     }
 
     @Override

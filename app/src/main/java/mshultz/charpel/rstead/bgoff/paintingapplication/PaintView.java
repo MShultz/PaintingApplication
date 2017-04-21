@@ -40,6 +40,10 @@ public class PaintView extends View {
     private int backgroundColor;
     private boolean isUsingBitmap = false;
 
+    public void setUsingBitmap(boolean input){
+        isUsingBitmap = input;
+    }
+
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         backgroundColor = Color.WHITE;
