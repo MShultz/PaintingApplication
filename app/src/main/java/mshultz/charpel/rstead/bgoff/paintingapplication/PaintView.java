@@ -83,8 +83,9 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        this.canvas=canvas;
         for(Paintable stroke : archivedStrokes){
-            stroke.paintStroke(canvas);
+            stroke.paintStroke(this.canvas);
         }
 
     }
@@ -195,7 +196,6 @@ public class PaintView extends View {
         archivedStrokes.add(new Stroke(path, painter));
     }
     public void save(ContentResolver resolver){
-        canvas.save();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         Date date = new Date();
         String test= MediaStore.Images.Media.insertImage(resolver,bitmap, dateFormat.format(date), "From Paint app");
