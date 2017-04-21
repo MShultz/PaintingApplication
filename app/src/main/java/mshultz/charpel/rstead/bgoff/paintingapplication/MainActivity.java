@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         if (id != 0) {
             Bitmap image = BitmapFactory.decodeResource(getResources(), id);
             paintView.setBrushImage(image);
+            paintView.setUsingBitmap(true);
         } else {
             paintView.setUsingBitmap(false);
         }

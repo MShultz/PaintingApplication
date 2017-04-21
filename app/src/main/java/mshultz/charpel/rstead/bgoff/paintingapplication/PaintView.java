@@ -91,7 +91,9 @@ public class PaintView extends View {
 
                 break;
             case MotionEvent.ACTION_UP:
-                path.lineTo(lastX, lastY);
+                if(!isUsingBitmap){
+                    path.lineTo(lastX, lastY);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(isUsingBitmap){
