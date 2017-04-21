@@ -2,25 +2,26 @@ package mshultz.charpel.rstead.bgoff.paintingapplication;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+
+import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
 
 /**
  * Created by Mary on 4/19/2017.
  */
 
 public class PaintView extends View {
-
     private final float DEFAULT_BRUSH_SIZE = 4f;
     private final int BIT_HEIGHT = 1700;
     private final int BIT_WIDTH = 1080;
@@ -29,14 +30,20 @@ public class PaintView extends View {
     private Path path;
     private Bitmap bitmap;
     private Canvas canvas;
+    private Bitmap currentStamp;
     private float lastX;
     private float lastY;
     private ArrayList<Stroke> archivedStrokes;
     private int currentColor;
     private float currentSize;
+    private int backgroundColor;
+    private ArrayList<ImageStroke> imageStrokes;
+    private boolean isUsingBitmap = false;
 
     public PaintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        backgroundColor = Color.WHITE;
+        imageStrokes = new ArrayList<>();
         currentColor = Color.BLACK;
         currentSize = DEFAULT_BRUSH_SIZE;
         archivedStrokes = new ArrayList<>();
@@ -52,12 +59,18 @@ public class PaintView extends View {
         path.reset();
         archivedStrokes = new ArrayList<>();
         archivedStrokes.add(new Stroke(path, painter));
+        imageStrokes.clear();
         invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        for(ImageStroke stroke : imageStrokes){
+            for(Point p : stroke.getPath()){
+                canvas.drawBitmap(stroke.getBitmap(), p.x, p.y, null);
+            }
+        }
         for(Stroke currentStroke: archivedStrokes){
             canvas.drawPath(currentStroke.getPath(), currentStroke.getPaint());
         }
@@ -68,19 +81,31 @@ public class PaintView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                path.moveTo(event.getX(), event.getY());
-                lastX = event.getX();
-                lastY = event.getY();
+                if(isUsingBitmap){
+                    imageStrokes.add(new ImageStroke(currentStamp));
+                }else{
+                    path.moveTo(event.getX(), event.getY());
+                    lastX = event.getX();
+                    lastY = event.getY();
+                }
+
                 break;
             case MotionEvent.ACTION_UP:
                 path.lineTo(lastX, lastY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                float avgX = (event.getX() + lastX) / 2;
-                float avgY = (event.getY() + lastY) / 2;
-                path.quadTo(lastX, lastY, avgX, avgY);
-                lastX = event.getX();
-                lastY = event.getY();
+                if(isUsingBitmap){
+                    int width = imageStrokes.get(imageStrokes.size() - 1).getBitmap().getWidth();
+                    int height = imageStrokes.get(imageStrokes.size() - 1).getBitmap().getHeight();
+                    imageStrokes.get(imageStrokes.size() - 1).getPath().add(new Point((int)event.getX() - width / 2, (int)event.getY() - height / 2));
+                }else{
+                    float avgX = (event.getX() + lastX) / 2;
+                    float avgY = (event.getY() + lastY) / 2;
+                    path.quadTo(lastX, lastY, avgX, avgY);
+                    lastX = event.getX();
+                    lastY = event.getY();
+                }
+
                 break;
         }
         invalidate();
@@ -128,12 +153,25 @@ public class PaintView extends View {
         path = new Path();
         initializePainter(Color.argb(a, r, g, b));
         archivedStrokes.add(new Stroke(path, painter));
+        isUsingBitmap = false;
 
     }
 
     public void setBrushSize(float brushSize){
         path = new Path();
         initializePainter(brushSize);
+        archivedStrokes.add(new Stroke(path, painter));
+        isUsingBitmap = false;
+    }
+
+    public void setBrushImage(Bitmap bitmap){
+        currentStamp = bitmap;
+        isUsingBitmap = true;
+    }
+
+    public void setEraser(){
+        path = new Path();
+        initializePainter(backgroundColor);
         archivedStrokes.add(new Stroke(path, painter));
     }
 }
