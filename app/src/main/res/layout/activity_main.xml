@@ -10,55 +10,81 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/background_light"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
         <mshultz.charpel.rstead.bgoff.paintingapplication.PaintView
-        android:id="@+id/signature_canvas"
-        android:layout_width="match_parent"
-        android:layout_height="515dp"
-        android:textColor="#FFFFFF" />
+            android:id="@+id/signature_canvas"
+            android:layout_width="match_parent"
+            android:layout_height="515dp"
+            android:textColor="#FFFFFF" />
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:background="?attr/colorControlHighlight">
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:onClick="setColor"
-                android:text="Color"
-                android:visibility="visible"
-                tools:layout_editor_absoluteX="23dp"
-                tools:layout_editor_absoluteY="0dp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:onClick="clearCanvas"
-                android:text="Clear"
-                tools:layout_editor_absoluteX="23dp"
-                tools:layout_editor_absoluteY="0dp" />
+                <Button
+                    android:id="@+id/button_color"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginRight="21dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/ic_action_settings"
+                    android:onClick="setColor"
+                    android:visibility="visible"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="0dp" />
 
-            <Button
-                android:id="@+id/brush"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:onClick="setBrushSize"
-                android:text="Brush"
-                android:visibility="visible" />
+                <Button
+                    android:id="@+id/button_brush"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginRight="21dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/ic_action_brush"
+                    android:onClick="setBrushSize"
+                    android:visibility="visible" />
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/button_save"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginRight="21dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/ic_action_save"
+                    android:elevation="1dp"
+                    android:onClick="onSaveClick" />
+
+                <Button
+                    android:id="@+id/button_clear"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginRight="21dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/ic_action_trash"
+                    android:onClick="clearCanvas"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="0dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
     </LinearLayout>
 
 </FrameLayout>

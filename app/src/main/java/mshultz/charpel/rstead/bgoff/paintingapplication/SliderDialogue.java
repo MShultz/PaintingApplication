@@ -20,7 +20,7 @@ import android.widget.SeekBar;
 public class SliderDialogue extends DialogFragment {
 
     public interface SliderDialogueListener{
-        public void onOKClick(DialogFragment dialog);
+        public void onColorOkClick(DialogFragment dialog);
     }
 
 
@@ -62,7 +62,7 @@ public class SliderDialogue extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                    sdListener.onOKClick(SliderDialogue.this);
+                    sdListener.onColorOkClick(SliderDialogue.this);
                     }
                 });
 
