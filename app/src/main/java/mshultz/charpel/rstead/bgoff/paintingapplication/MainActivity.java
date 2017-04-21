@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
     }
 
     public void onSaveClick(View view){
-        Toast.makeText(this, "Chris doesn't have this button implemented yet!", Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(this, "Chris doesn't have this button implemented yet!", Toast.LENGTH_SHORT).show();*/
+        paintView.save(getContentResolver());
     }
 
     public void setColor(View view) {
@@ -94,9 +95,6 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
     public void setBrushSize(View view) {
         dialogue = new BrushPropsDialogue();
         dialogue.show(getFragmentManager(), "BrushProps");
-    }
-    public void saveToGallery(View view){
-        paintView.save(getContentResolver());
     }
     @Override
     public void onColorOkClick(DialogFragment dialog) {

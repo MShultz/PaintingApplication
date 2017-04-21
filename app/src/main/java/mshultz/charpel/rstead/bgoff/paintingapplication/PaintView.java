@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 
 import android.graphics.Point;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -189,20 +191,21 @@ public class PaintView extends View {
         archivedStrokes.add(new Stroke(path, painter));
     }
     public void save(ContentResolver resolver){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        canvas.save();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         Date date = new Date();
         String test= MediaStore.Images.Media.insertImage(resolver,bitmap, dateFormat.format(date), "From Paint app");
         if(test!=null){
-            Toast.makeText(getContext(),"Save Sucess",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"Save Success",Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
         }
-//        FileOutputStream out = null;
+//        File file=new File("/storage/emulated/0/Pictures/",dateFormat.format(date)+".jpg");
+//        FileOutputStream out=null;
 //        try {
-//            out = new FileOutputStream("storage/emulated/0/");
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-//            // PNG is a lossless format, the compression factor (100) is ignored
+//            out = new FileOutputStream(file);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 //            Toast.makeText(getContext(),"Save Sucess",Toast.LENGTH_LONG).show();
 //        } catch (Exception e) {
 //            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
