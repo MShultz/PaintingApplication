@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
     public void setBrushShape(int id) {
         if(id != 0) {
             Bitmap image = BitmapFactory.decodeResource(getResources(), id);
-            paintView.setBrushImage(image, 20);
+            paintView.setBrushImage(image);
         }else{
             paintView.setUsingBitmap(false);
         }

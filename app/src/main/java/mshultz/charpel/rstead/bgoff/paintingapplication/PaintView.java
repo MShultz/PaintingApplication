@@ -40,6 +40,7 @@ public class PaintView extends View {
     private int backgroundColor;
     private boolean isUsingBitmap = false;
 
+
     public void setUsingBitmap(boolean input){
         isUsingBitmap = input;
     }
@@ -162,13 +163,14 @@ public class PaintView extends View {
 
     public void setBrushSize(float brushSize){
         path = new Path();
+        this.currentSize = brushSize;
         initializePainter(brushSize);
         archivedStrokes.add(new Stroke(path, painter));
         isUsingBitmap = false;
     }
 
-    public void setBrushImage(Bitmap bitmap, int dimension){
-        currentStamp = Bitmap.createScaledBitmap(bitmap, dimension, dimension, false);
+    public void setBrushImage(Bitmap bitmap){
+        currentStamp = Bitmap.createScaledBitmap(bitmap, (int)currentSize * 10, (int)currentSize * 10, false);
         isUsingBitmap = true;
     }
 
