@@ -8,32 +8,31 @@ import android.graphics.Path;
  * Created by Mary on 4/19/2017.
  */
 
-public class Stroke implements Paintable{
+public class Stroke implements Paintable {
     Path path;
     Paint paint;
-    public Stroke(Path path, Paint paint){
+
+    public Stroke(Path path, Paint paint) {
         this.setPath(path);
         this.setPaint(paint);
     }
 
-    private void setPath(Path path){
+    private void setPath(Path path) {
         this.path = path;
     }
 
-    private void setPaint(Paint paint){
+    private void setPaint(Paint paint) {
         this.paint = paint;
     }
 
-    public Path getPath(){
+    public Path getPath() {
         return path;
     }
 
-    public Paint getPaint(){
-        return paint;
-    }
+    public Paint getPaint() {return paint; }
 
     @Override
-    public void paintStroke(Canvas canvas){
+    public void paintStroke(Canvas canvas) {
         canvas.drawPath(getPath(), getPaint());
     }
 }
