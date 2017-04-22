@@ -54,50 +54,50 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/emptyStar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:onClick="onShapeClick"
-                app:srcCompat="@drawable/open_star" />
+                android:background="@drawable/open_star"
+                android:onClick="onShapeClick" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/lips"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:onClick="onShapeClick"
-                app:srcCompat="@drawable/lips" />
+                android:background="@drawable/lips"
+                android:onClick="onShapeClick" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/heart"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:onClick="onShapeClick"
-                app:srcCompat="@drawable/filled_heart" />
+                android:background="@drawable/filled_heart"
+                android:onClick="onShapeClick" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/filledStar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:onClick="onShapeClick"
-                app:srcCompat="@drawable/black_star" />
+                android:background="@drawable/black_star"
+                android:onClick="onShapeClick" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/defaultBrush"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:onClick="onShapeClick"
-                app:srcCompat="@drawable/ic_action_brush" />
+                android:background="@drawable/ic_action_brush"
+                android:onClick="onShapeClick" />
         </TableRow>
 
     </TableLayout>

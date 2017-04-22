@@ -1,5 +1,6 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 
@@ -7,6 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 
 import android.graphics.Point;
 import android.media.Image;
@@ -14,8 +17,18 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -70,8 +83,8 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for(Paintable stroke : archivedStrokes) {
-            stroke.paintStroke(canvas);
+
+            stroke.paintStroke(this.canvas);
         }
     }
 
@@ -179,5 +192,37 @@ public class PaintView extends View {
         path = new Path();
         initializePainter(backgroundColor);
         archivedStrokes.add(new Stroke(path, painter));
+    }
+    public void save(ContentResolver resolver){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        Date date = new Date();
+        String test= MediaStore.Images.Media.insertImage(resolver,bitmap, dateFormat.format(date), "From Paint app");
+        if(test!=null){
+            Toast.makeText(getContext(),"Save Success",Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+        }
+//        File file=new File("/storage/emulated/0/Pictures/",dateFormat.format(date)+".jpg");
+//        FileOutputStream out=null;
+//        try {
+//            out = new FileOutputStream(file);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//            Toast.makeText(getContext(),"Save Sucess",Toast.LENGTH_LONG).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+//            }
+//        }
+
+
     }
 }

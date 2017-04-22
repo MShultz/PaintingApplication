@@ -22,7 +22,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 
 
@@ -86,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
 
 
     public void onSaveClick(View view) {
-        Toast.makeText(this, "Chris doesn't have this button implemented yet!", Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(this, "Chris doesn't have this button implemented yet!", Toast.LENGTH_SHORT).show();*/
+        paintView.save(getContentResolver());
     }
 
     public void setColor(View view) {
@@ -98,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         dialogue = new BrushPropsDialogue();
         dialogue.show(getFragmentManager(), "BrushProps");
     }
-
     public void savePref(View view) {
         //Get Color
         // boolean success = preferenceHandler.addColor(//Color you got);
