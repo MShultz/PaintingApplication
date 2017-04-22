@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         paintView.clearCanvas();
     }
 
-    public void setEraser(View view) {
-        paintView.setEraser();
-    }
-
     public void onShapeClick(View view) {
 
         int id = view.getId();
@@ -74,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
                 break;
             case R.id.defaultBrush:
                 brushType = 0;
+                paintView.setColor(255, 0, 0, 0);
+                break;
+            case R.id.eraser:
+                brushType = 0;
+                paintView.setEraser();
                 break;
             default:
                 throw new IllegalArgumentException("NO SUCH ID!");
@@ -96,18 +97,17 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         paintView.save(getContentResolver());
     }
 
-    public void onSaveColorClick(View view){
+    public void onSaveColorClick(View view) {
         ColorDrawable saveColor = (ColorDrawable) ((ImageView) ((SliderDialogue) dialogue).getView(R.id.colorPrev)).getBackground();
-        ImageView pref = (ImageView)(((SliderDialogue)dialogue).getView(R.id.pref1 + (preferenceHandler.getNumColors())));
-        if(preferenceHandler.getNumColors() < 8)
-        {
+        ImageView pref = (ImageView) (((SliderDialogue) dialogue).getView(R.id.pref1 + (preferenceHandler.getNumColors())));
+        if (preferenceHandler.getNumColors() < 8) {
             pref.setBackgroundColor(saveColor.getColor());
             preferenceHandler.addColor(saveColor.getColor());
         }
     }
 
-    public void onDelColorClick(View view){
-        if(preferenceHandler.getNumColors() > 0) {
+    public void onDelColorClick(View view) {
+        if (preferenceHandler.getNumColors() > 0) {
             ImageView pref = (ImageView) (((SliderDialogue) dialogue).getView(R.id.pref1 + (preferenceHandler.getNumColors() - 1)));
             pref.setBackgroundColor(0);
             preferenceHandler.removeColor();
@@ -119,16 +119,16 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         dialogue.show(getFragmentManager(), "ColorProps");
     }
 
-    public void setFavorites(View view){
+    public void setFavorites(View view) {
         ArrayList<Integer> favoriteColors = preferenceHandler.getFavorites();
-        for(int i = 0; i < favoriteColors.size() && preferenceHandler.getNumColors() > 0; i++){
-            ((ImageView)((SliderDialogue)dialogue).getView(R.id.pref1 + i)).setBackgroundColor(favoriteColors.get(i));
+        for (int i = 0; i < favoriteColors.size() && preferenceHandler.getNumColors() > 0; i++) {
+            ((ImageView) ((SliderDialogue) dialogue).getView(R.id.pref1 + i)).setBackgroundColor(favoriteColors.get(i));
         }
     }
 
-    public void onColorClick(View view){
-        ColorDrawable color = ((ColorDrawable)view.getBackground());
-        ((SliderDialogue)dialogue).setPreview(color.getColor());
+    public void onColorClick(View view) {
+        ColorDrawable color = ((ColorDrawable) view.getBackground());
+        ((SliderDialogue) dialogue).setPreview(color.getColor());
         paintView.setColor(color);
     }
 

@@ -98,6 +98,15 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/ic_action_brush"
                 android:onClick="onShapeClick" />
+
+            <ImageButton
+                android:id="@+id/eraser"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_action_dontlike"
+                android:onClick="onShapeClick" />
         </TableRow>
 
     </TableLayout>
