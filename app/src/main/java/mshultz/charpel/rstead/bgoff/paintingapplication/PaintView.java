@@ -70,10 +70,9 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for(Paintable stroke : archivedStrokes){
+        for(Paintable stroke : archivedStrokes) {
             stroke.paintStroke(canvas);
         }
-
     }
 
     @Override
