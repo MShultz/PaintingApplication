@@ -1,11 +1,14 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.app.DialogFragment;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.BottomSheetBehavior;
 //import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -28,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 
-
+@TargetApi(25)
 public class MainActivity extends AppCompatActivity implements SliderDialogue.SliderDialogueListener, BrushPropsDialogue.BrushPropsListener {
     private final String PACKAGE_NAME = "mshultz.charpel.rstead.bgoff";
     DialogFragment dialogue;
@@ -93,23 +96,45 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         paintView.save(getContentResolver());
     }
 
-    public void setColor(View view) {
+    public void onSaveColorClick(View view){
+        ColorDrawable saveColor = (ColorDrawable) ((ImageView) ((SliderDialogue) dialogue).getView(R.id.colorPrev)).getBackground();
+        ImageView pref = (ImageView)(((SliderDialogue)dialogue).getView(R.id.pref1 + (preferenceHandler.getNumColors())));
+        if(preferenceHandler.getNumColors() < 8)
+        {
+            pref.setBackgroundColor(saveColor.getColor());
+            preferenceHandler.addColor(saveColor.getColor());
+        }
+    }
+
+    public void onDelColorClick(View view){
+        if(preferenceHandler.getNumColors() > 0) {
+            ImageView pref = (ImageView) (((SliderDialogue) dialogue).getView(R.id.pref1 + (preferenceHandler.getNumColors() - 1)));
+            pref.setBackgroundColor(0);
+            preferenceHandler.removeColor();
+        }
+    }
+
+    public void setColor(View view) throws InterruptedException {
         dialogue = new SliderDialogue();
         dialogue.show(getFragmentManager(), "ColorProps");
+    }
+
+    public void setFavorites(View view){
+        ArrayList<Integer> favoriteColors = preferenceHandler.getFavorites();
+        for(int i = 0; i < favoriteColors.size() && preferenceHandler.getNumColors() > 0; i++){
+            ((ImageView)((SliderDialogue)dialogue).getView(R.id.pref1 + i)).setBackgroundColor(favoriteColors.get(i));
+        }
+    }
+
+    public void onColorClick(View view){
+        ColorDrawable color = ((ColorDrawable)view.getBackground());
+        ((SliderDialogue)dialogue).setPreview(color.getColor());
+        paintView.setColor(color);
     }
 
     public void setBrushSize(View view) {
         dialogue = new BrushPropsDialogue();
         dialogue.show(getFragmentManager(), "BrushProps");
-    }
-    public void savePref(View view) {
-        //Get Color
-        // boolean success = preferenceHandler.addColor(//Color you got);
-        //if sucessful
-        //Update shared pref.
-        //ArrayList<Color> favoriteColors = preferenceHandler.getFavorites();
-        //Otherwise
-        //Toast to failure
     }
 
     @Override

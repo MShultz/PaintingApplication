@@ -1,10 +1,12 @@
 package mshultz.charpel.rstead.bgoff.paintingapplication;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -13,16 +15,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ryan on 4/20/2017.
  */
-
+@TargetApi(25)
 public class SliderDialogue extends DialogFragment {
 
     public interface SliderDialogueListener{
         public void onColorOkClick(DialogFragment dialog);
     }
-
 
     private SeekBar redSlider;
     private SeekBar blueSlider;
@@ -41,6 +44,15 @@ public class SliderDialogue extends DialogFragment {
     public int getGreenValue() {
         return greenValue;
     }
+
+    public void setPreview(int color){
+        ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(color);
+    }
+
+    public View getView(int id){
+        return activity.findViewById(id);
+    }
+
 
     public int blueValue = 128;
     public int greenValue = 128;
@@ -69,7 +81,7 @@ public class SliderDialogue extends DialogFragment {
         setRGBSlider(redSlider,R.id.Red);
         setRGBSlider(greenSlider,R.id.Green);
         setRGBSlider(blueSlider,R.id.Blue);
-        ((ImageView)activity.findViewById(R.id.imageView)).setColorFilter(Color.parseColor(String.format("#%02x%02x%02x", 128, 128, 128)));
+        ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(Color.parseColor(String.format("#%02x%02x%02x", 128, 128, 128)));
 
         return builder.create();
     }
@@ -82,7 +94,7 @@ public class SliderDialogue extends DialogFragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateColor(seekBar,progress);
-                ((ImageView)activity.findViewById(R.id.imageView)).setColorFilter(Color.parseColor(String.format("#%02x%02x%02x", redValue, greenValue, blueValue)));
+                ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(Color.parseColor(String.format("#%02x%02x%02x", redValue, greenValue, blueValue)));
             }
 
             @Override

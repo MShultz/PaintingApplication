@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.ColorDrawable;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 
@@ -173,8 +174,15 @@ public class PaintView extends View {
         initializePainter(Color.argb(a, r, g, b));
         archivedStrokes.add(new Stroke(path, painter));
         isUsingBitmap = false;
-
     }
+
+    public void setColor(ColorDrawable color) {
+        path = new Path();
+        initializePainter(color.getColor());
+        archivedStrokes.add(new Stroke(path, painter));
+        isUsingBitmap = false;
+    }
+
 
     public void setBrushSize(float brushSize) {
         path = new Path();

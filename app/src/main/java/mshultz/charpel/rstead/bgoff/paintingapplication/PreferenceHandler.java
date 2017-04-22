@@ -3,6 +3,7 @@ package mshultz.charpel.rstead.bgoff.paintingapplication;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.util.Log;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class PreferenceHandler {
 
     private final String COLOR_QUERY = "Colors";
     private SharedPreferences sharedPreferences;
-    private ArrayList<Color> favoriteColors;
+    private ArrayList<Integer> favoriteColors;
 
     public PreferenceHandler(SharedPreferences sharedPreferences) {
         this.setPreference(sharedPreferences);
@@ -29,7 +30,7 @@ public class PreferenceHandler {
 
     private void setColorList(){
         try {
-            favoriteColors = (ArrayList<Color>) ObjectSerializer.deserialize(sharedPreferences.getString(COLOR_QUERY,ObjectSerializer.serialize(new ArrayList<Color>())));
+            favoriteColors = (ArrayList<Integer>) ObjectSerializer.deserialize(sharedPreferences.getString(COLOR_QUERY,ObjectSerializer.serialize(new ArrayList<Integer>())));
             if(favoriteColors == null)
                 favoriteColors = new ArrayList<>();
         } catch (IOException e) {
@@ -41,9 +42,19 @@ public class PreferenceHandler {
         return favoriteColors.size();
     }
 
-    public boolean addColor(Color currentColor){
+    public boolean addColor(Integer currentColor){
         favoriteColors.add(currentColor);
-       boolean success = true;
+        return writeList();
+    }
+    public boolean removeColor(){
+        favoriteColors.remove(favoriteColors.size()-1);
+        return writeList();
+    }
+    public ArrayList<Integer> getFavorites(){
+        return favoriteColors;
+    }
+    private boolean writeList(){
+        boolean success = true;
         try{
             sharedPreferences.edit().putString(COLOR_QUERY, ObjectSerializer.serialize(favoriteColors)).apply();
         }catch(IOException e){
@@ -52,9 +63,4 @@ public class PreferenceHandler {
         }
         return success;
     }
-
-    public ArrayList<Color> getFavorites(){
-        return favoriteColors;
-    }
-
 }
