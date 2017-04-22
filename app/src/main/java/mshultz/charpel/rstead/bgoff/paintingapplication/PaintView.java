@@ -8,8 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.drawable.ColorDrawable;
-import android.provider.ContactsContract;
+import android.graphics.drawable.Drawable;import android.graphics.drawable.ColorDrawable;import android.provider.ContactsContract;
 import android.provider.MediaStore;
 
 import android.graphics.Point;
@@ -85,8 +84,9 @@ public class PaintView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for (Paintable stroke : archivedStrokes) {
-            stroke.paintStroke(this.canvas);
+            stroke.paintStroke(canvas);
         }
+        this.canvas=canvas;
     }
 
     @Override
@@ -124,7 +124,6 @@ public class PaintView extends View {
         invalidate();
         return true;
     }
-
     private void setContext(Context context) {
         this.context = context;
     }
@@ -204,6 +203,7 @@ public class PaintView extends View {
     }
 
     public void save(ContentResolver resolver) {
+        getBitmapFromView();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         Date date = new Date();
         String test = MediaStore.Images.Media.insertImage(resolver, bitmap, dateFormat.format(date), "From Paint app");
@@ -212,26 +212,17 @@ public class PaintView extends View {
         } else {
             Toast.makeText(getContext(), "Save Failure", Toast.LENGTH_LONG).show();
         }
-//        File file=new File("/storage/emulated/0/Pictures/",dateFormat.format(date)+".jpg");
-//        FileOutputStream out=null;
-//        try {
-//            out = new FileOutputStream(file);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-//            Toast.makeText(getContext(),"Save Sucess",Toast.LENGTH_LONG).show();
-//        } catch (Exception e) {
-//            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (out != null) {
-//                    out.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
-//            }
-//        }
 
-
+    }
+    public void getBitmapFromView() {
+        Bitmap returnedBitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable =this.getBackground();
+        if (bgDrawable!=null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        this.draw(canvas);
+        bitmap=returnedBitmap;
     }
 }
