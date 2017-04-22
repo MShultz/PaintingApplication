@@ -54,7 +54,7 @@ public class PaintView extends View {
     private boolean isUsingBitmap = false;
 
 
-    public void setUsingBitmap(boolean input){
+    public void setUsingBitmap(boolean input) {
         isUsingBitmap = input;
     }
 
@@ -83,7 +83,7 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        for (Paintable stroke : archivedStrokes) {
             stroke.paintStroke(this.canvas);
         }
     }
@@ -92,10 +92,10 @@ public class PaintView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if(isUsingBitmap){
+                if (isUsingBitmap) {
                     archivedStrokes.add(new ImageStroke(currentStamp));
-                    addPointToBitmapStroke((int)event.getX(), (int)event.getY());
-                }else{
+                    addPointToBitmapStroke((int) event.getX(), (int) event.getY());
+                } else {
                     path.moveTo(event.getX(), event.getY());
                     lastX = event.getX();
                     lastY = event.getY();
@@ -103,14 +103,14 @@ public class PaintView extends View {
 
                 break;
             case MotionEvent.ACTION_UP:
-                if(!isUsingBitmap){
+                if (!isUsingBitmap) {
                     path.lineTo(lastX, lastY);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(isUsingBitmap){
-                    addPointToBitmapStroke((int)event.getX(), (int)event.getY());
-                }else{
+                if (isUsingBitmap) {
+                    addPointToBitmapStroke((int) event.getX(), (int) event.getY());
+                } else {
                     float avgX = (event.getX() + lastX) / 2;
                     float avgY = (event.getY() + lastY) / 2;
                     path.quadTo(lastX, lastY, avgX, avgY);
@@ -128,10 +128,10 @@ public class PaintView extends View {
         this.context = context;
     }
 
-    private void addPointToBitmapStroke(int x, int y){
-        int width = ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getWidth();
-        int height = ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getHeight();
-        ((ImageStroke)archivedStrokes.get(archivedStrokes.size() - 1)).getPath().add(new Point(x - width / 2, y - height / 2));
+    private void addPointToBitmapStroke(int x, int y) {
+        int width = ((ImageStroke) archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getWidth();
+        int height = ((ImageStroke) archivedStrokes.get(archivedStrokes.size() - 1)).getBitmap().getHeight();
+        ((ImageStroke) archivedStrokes.get(archivedStrokes.size() - 1)).getPath().add(new Point(x - width / 2, y - height / 2));
     }
 
     private void initializePainter() {
@@ -142,6 +142,7 @@ public class PaintView extends View {
         painter.setStyle(Paint.Style.STROKE);
         painter.setStrokeWidth(currentSize);
     }
+
     private void initializePainter(int color) {
         this.currentColor = color;
         painter = new Paint();
@@ -175,7 +176,7 @@ public class PaintView extends View {
 
     }
 
-    public void setBrushSize(float brushSize){
+    public void setBrushSize(float brushSize) {
         path = new Path();
         this.currentSize = brushSize;
         initializePainter(brushSize);
@@ -183,25 +184,25 @@ public class PaintView extends View {
         isUsingBitmap = false;
     }
 
-    public void setBrushImage(Bitmap bitmap){
-        currentStamp = Bitmap.createScaledBitmap(bitmap, (int)currentSize * 10, (int)currentSize * 10, false);
+    public void setBrushImage(Bitmap bitmap) {
+        currentStamp = Bitmap.createScaledBitmap(bitmap, (int) currentSize * 10, (int) currentSize * 10, false);
         isUsingBitmap = true;
     }
 
-    public void setEraser(){
+    public void setEraser() {
         path = new Path();
         initializePainter(backgroundColor);
         archivedStrokes.add(new Stroke(path, painter));
     }
-    public void save(ContentResolver resolver){
+
+    public void save(ContentResolver resolver) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         Date date = new Date();
-        String test= MediaStore.Images.Media.insertImage(resolver,bitmap, dateFormat.format(date), "From Paint app");
-        if(test!=null){
-            Toast.makeText(getContext(),"Save Success",Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(getContext(),"Save Failure",Toast.LENGTH_LONG).show();
+        String test = MediaStore.Images.Media.insertImage(resolver, bitmap, dateFormat.format(date), "From Paint app");
+        if (test != null) {
+            Toast.makeText(getContext(), "Save Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "Save Failure", Toast.LENGTH_LONG).show();
         }
 //        File file=new File("/storage/emulated/0/Pictures/",dateFormat.format(date)+".jpg");
 //        FileOutputStream out=null;
