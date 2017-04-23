@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import java.util.ArrayList;
 
 /**
  * Created by Ryan on 4/20/2017.
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 @TargetApi(25)
 public class SliderDialogue extends DialogFragment {
 
-    public interface SliderDialogueListener{
+    public interface SliderDialogueListener {
         public void onColorOkClick(DialogFragment dialog);
     }
 
@@ -45,20 +43,23 @@ public class SliderDialogue extends DialogFragment {
         return greenValue;
     }
 
-    public void setRedValue(int redValue){this.redValue = redValue;}
-    public void setBlueValue(int blueValue){this.blueValue = blueValue;}
-    public void setGreenValue(int greenValue){this.greenValue = greenValue;}
-
-    public SeekBar getRedSlider(){return redSlider;}
-    public SeekBar getBlueSlider(){return blueSlider;}
-    public SeekBar getGreenSlider(){return greenSlider;}
-
-
-    public void setPreview(int color){
-        ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(color);
+    public void setRedValue(int redValue) {
+        this.redValue = redValue;
     }
 
-    public View getView(int id){
+    public void setBlueValue(int blueValue) {
+        this.blueValue = blueValue;
+    }
+
+    public void setGreenValue(int greenValue) {
+        this.greenValue = greenValue;
+    }
+
+    public void setPreview(int color) {
+        ((ImageView) activity.findViewById(R.id.colorPrev)).setBackgroundColor(color);
+    }
+
+    public View getView(int id) {
         return activity.findViewById(id);
     }
 
@@ -71,39 +72,35 @@ public class SliderDialogue extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         activity = inflater.inflate(R.layout.slide_dialogue, null);
         builder.setView(activity)
-                // Add action buttons
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                    sdListener.onColorOkClick(SliderDialogue.this);
+                        sdListener.onColorOkClick(SliderDialogue.this);
                     }
                 });
 
-        setRGBSlider(redSlider,R.id.Red);
-        setRGBSlider(greenSlider,R.id.Green);
-        setRGBSlider(blueSlider,R.id.Blue);
-        ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(Color.parseColor(String.format("#%02x%02x%02x", 128, 128, 128)));
+        setRGBSlider(redSlider, R.id.Red);
+        setRGBSlider(greenSlider, R.id.Green);
+        setRGBSlider(blueSlider, R.id.Blue);
+        ((ImageView) activity.findViewById(R.id.colorPrev)).setBackgroundColor(Color.parseColor(String.format("#%02x%02x%02x", 128, 128, 128)));
 
         return builder.create();
     }
 
-    private void setRGBSlider(SeekBar seekBar, int Id){
-        seekBar=(SeekBar)activity.findViewById(Id);
+    private void setRGBSlider(SeekBar seekBar, int Id) {
+        seekBar = (SeekBar) activity.findViewById(Id);
         seekBar.setMax(255);
         seekBar.setProgress(128);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                updateColor(seekBar,progress);
-                ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(Color.parseColor(String.format("#%02x%02x%02x", redValue, greenValue, blueValue)));
+                updateColor(seekBar, progress);
+                ((ImageView) activity.findViewById(R.id.colorPrev)).setBackgroundColor(Color.parseColor(String.format("#%02x%02x%02x", redValue, greenValue, blueValue)));
             }
 
             @Override
@@ -117,34 +114,31 @@ public class SliderDialogue extends DialogFragment {
             }
         });
     }
-    public void updateColor(SeekBar seekBar,int progress){
-        switch (seekBar.getId()){
+
+    public void updateColor(SeekBar seekBar, int progress) {
+        switch (seekBar.getId()) {
             case R.id.Red:
-                redValue=progress;
+                redValue = progress;
                 break;
             case R.id.Green:
-                greenValue=progress;
+                greenValue = progress;
                 break;
             case R.id.Blue:
-                blueValue=progress;
+                blueValue = progress;
                 break;
             default:
-                Log.e("Invalid Slider","Update Color");
+                Log.e("Invalid Slider", "Update Color");
         }
     }
 
     SliderDialogueListener sdListener;
 
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // Verify that the host activity implements the callback interface
         try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
             sdListener = (SliderDialogueListener) activity;
         } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
                     + " must implement NoticeDialogListener");
         }

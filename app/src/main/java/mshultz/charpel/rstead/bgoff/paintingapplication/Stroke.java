@@ -29,7 +29,9 @@ public class Stroke implements Paintable {
         return path;
     }
 
-    public Paint getPaint() {return paint; }
+    public Paint getPaint() {
+        return paint;
+    }
 
     @Override
     public void paintStroke(Canvas canvas) {

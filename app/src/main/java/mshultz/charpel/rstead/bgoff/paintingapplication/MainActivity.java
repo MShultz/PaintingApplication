@@ -5,30 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.app.DialogFragment;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.BottomSheetBehavior;
-//import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
 
 @TargetApi(25)
@@ -103,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         if (preferenceHandler.getNumColors() < 8) {
             pref.setBackgroundColor(saveColor.getColor());
             preferenceHandler.addColor(saveColor.getColor());
-        }else{
+        } else {
             Toast.makeText(this, "Max Number of Favorites Added", Toast.LENGTH_SHORT).show();
         }
     }
@@ -147,23 +131,23 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         setBrushShape(brushType);
     }
 
-    public void onFavoriteClick(View view){
+    public void onFavoriteClick(View view) {
         int color = ((ColorDrawable) view.getBackground()).getColor();
         setSliderValues(color);
         setSliderProgress();
         ((SliderDialogue) dialogue).setPreview(color);
     }
 
-    private void setSliderValues(int color){
+    private void setSliderValues(int color) {
         ((SliderDialogue) dialogue).setRedValue((color >> 16) & 0xFF);
         ((SliderDialogue) dialogue).setGreenValue((color >> 8) & 0xFF);
         ((SliderDialogue) dialogue).setBlueValue((color >> 0) & 0xFF);
     }
 
-    private void setSliderProgress(){
-        ((SeekBar)((SliderDialogue) dialogue).getView(R.id.Red)).setProgress(((SliderDialogue) dialogue).getRedValue());
-        ((SeekBar)((SliderDialogue) dialogue).getView(R.id.Blue)).setProgress(((SliderDialogue) dialogue).getBlueValue());
-        ((SeekBar)((SliderDialogue) dialogue).getView(R.id.Green)).setProgress(((SliderDialogue) dialogue).getGreenValue());
+    private void setSliderProgress() {
+        ((SeekBar) ((SliderDialogue) dialogue).getView(R.id.Red)).setProgress(((SliderDialogue) dialogue).getRedValue());
+        ((SeekBar) ((SliderDialogue) dialogue).getView(R.id.Blue)).setProgress(((SliderDialogue) dialogue).getBlueValue());
+        ((SeekBar) ((SliderDialogue) dialogue).getView(R.id.Green)).setProgress(((SliderDialogue) dialogue).getGreenValue());
 
     }
 }

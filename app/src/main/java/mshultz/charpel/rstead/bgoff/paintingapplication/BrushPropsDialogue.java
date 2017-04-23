@@ -22,35 +22,22 @@ public class BrushPropsDialogue extends DialogFragment {
     }
 
     private BrushPropsListener bpListener;
-
     private SeekBar sizeSlider;
-
     private float brushSize = 5f;
-
-    private int brushType;
-
     private View activity;
 
     public float getBrushSize() {
         return brushSize;
     }
 
-    public int getBrushType(){
-        return brushType;
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         activity = inflater.inflate(R.layout.brush_prop_dialogue, null);
         builder.setView(activity)
-                // Add action buttons
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -64,7 +51,7 @@ public class BrushPropsDialogue extends DialogFragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 brushSize = progress + 1;
-                ((TextView)activity.findViewById(R.id.sizeIndic)).setText("Current size: " + brushSize + "px");
+                ((TextView) activity.findViewById(R.id.sizeIndic)).setText("Current size: " + brushSize + "px");
             }
 
             @Override
@@ -80,16 +67,12 @@ public class BrushPropsDialogue extends DialogFragment {
         return builder.create();
     }
 
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // Verify that the host activity implements the callback interface
         try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
             bpListener = (BrushPropsListener) activity;
         } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
                     + " must implement NoticeDialogListener");
         }

@@ -8,26 +8,20 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.drawable.Drawable;import android.graphics.drawable.ColorDrawable;import android.provider.ContactsContract;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.provider.MediaStore;
 
 import android.graphics.Point;
-import android.media.Image;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -86,7 +80,7 @@ public class PaintView extends View {
         for (Paintable stroke : archivedStrokes) {
             stroke.paintStroke(canvas);
         }
-        this.canvas=canvas;
+        this.canvas = canvas;
     }
 
     @Override
@@ -124,6 +118,7 @@ public class PaintView extends View {
         invalidate();
         return true;
     }
+
     private void setContext(Context context) {
         this.context = context;
     }
@@ -214,15 +209,16 @@ public class PaintView extends View {
         }
 
     }
+
     public void getBitmapFromView() {
-        Bitmap returnedBitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(),Bitmap.Config.ARGB_8888);
+        Bitmap returnedBitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable =this.getBackground();
-        if (bgDrawable!=null)
+        Drawable bgDrawable = this.getBackground();
+        if (bgDrawable != null)
             bgDrawable.draw(canvas);
         else
             canvas.drawColor(Color.WHITE);
         this.draw(canvas);
-        bitmap=returnedBitmap;
+        bitmap = returnedBitmap;
     }
 }

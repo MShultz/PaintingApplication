@@ -2,8 +2,6 @@ package mshultz.charpel.rstead.bgoff.paintingapplication;
 
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.util.Log;
 
 import java.io.IOException;
@@ -28,36 +26,39 @@ public class PreferenceHandler {
         this.sharedPreferences = sharedPreferences;
     }
 
-    private void setColorList(){
+    private void setColorList() {
         try {
-            favoriteColors = (ArrayList<Integer>) ObjectSerializer.deserialize(sharedPreferences.getString(COLOR_QUERY,ObjectSerializer.serialize(new ArrayList<Integer>())));
-            if(favoriteColors == null)
+            favoriteColors = (ArrayList<Integer>) ObjectSerializer.deserialize(sharedPreferences.getString(COLOR_QUERY, ObjectSerializer.serialize(new ArrayList<Integer>())));
+            if (favoriteColors == null)
                 favoriteColors = new ArrayList<>();
         } catch (IOException e) {
             Log.e("ReadingPreference", e.toString());
         }
     }
 
-    public int getNumColors(){
+    public int getNumColors() {
         return favoriteColors.size();
     }
 
-    public boolean addColor(Integer currentColor){
+    public boolean addColor(Integer currentColor) {
         favoriteColors.add(currentColor);
         return writeList();
     }
-    public boolean removeColor(){
-        favoriteColors.remove(favoriteColors.size()-1);
+
+    public boolean removeColor() {
+        favoriteColors.remove(favoriteColors.size() - 1);
         return writeList();
     }
-    public ArrayList<Integer> getFavorites(){
+
+    public ArrayList<Integer> getFavorites() {
         return favoriteColors;
     }
-    private boolean writeList(){
+
+    private boolean writeList() {
         boolean success = true;
-        try{
+        try {
             sharedPreferences.edit().putString(COLOR_QUERY, ObjectSerializer.serialize(favoriteColors)).apply();
-        }catch(IOException e){
+        } catch (IOException e) {
             Log.e("WritingPreference", e.toString());
             success = false;
         }
