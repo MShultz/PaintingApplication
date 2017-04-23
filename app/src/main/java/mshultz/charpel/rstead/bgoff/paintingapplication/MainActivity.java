@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
             case R.id.heart:
                 brushType = R.drawable.filled_heart;
                 break;
+            case R.id.chris:
+                brushType = R.drawable.chris;
+                break;
+            case R.id.dales:
+                brushType = R.drawable.dales;
+                break;
             case R.id.defaultBrush:
                 brushType = 0;
                 paintView.setColor(255, 0, 0, 0);
