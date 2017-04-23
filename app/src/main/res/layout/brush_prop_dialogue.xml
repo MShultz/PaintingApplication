@@ -55,6 +55,24 @@
             android:gravity="center">
 
             <ImageButton
+                android:id="@+id/dales"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/dales"
+                android:onClick="onShapeClick" />
+
+            <ImageButton
+                android:id="@+id/chris"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/chris"
+                android:onClick="onShapeClick" />
+
+            <ImageButton
                 android:id="@+id/emptyStar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
