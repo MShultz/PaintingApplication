@@ -15,7 +15,7 @@
         <mshultz.charpel.rstead.bgoff.paintingapplication.PaintView
             android:id="@+id/signature_canvas"
             android:layout_width="match_parent"
-            android:layout_height="1150dp"
+            android:layout_height="850dp"
             android:background="@android:color/white"
             android:textColor="#FFFFFF" />
 

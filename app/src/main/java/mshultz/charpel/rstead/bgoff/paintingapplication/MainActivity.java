@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         if (preferenceHandler.getNumColors() < 8) {
             pref.setBackgroundColor(saveColor.getColor());
             preferenceHandler.addColor(saveColor.getColor());
+        }else{
+            Toast.makeText(this, "Max Number of Favorites Added", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -126,12 +128,6 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
         }
     }
 
-    public void onColorClick(View view) {
-        ColorDrawable color = ((ColorDrawable) view.getBackground());
-        ((SliderDialogue) dialogue).setPreview(color.getColor());
-        paintView.setColor(color);
-    }
-
     public void setBrushSize(View view) {
         dialogue = new BrushPropsDialogue();
         dialogue.show(getFragmentManager(), "BrushProps");
@@ -149,5 +145,25 @@ public class MainActivity extends AppCompatActivity implements SliderDialogue.Sl
     public void onBrushPropOKClick(DialogFragment dialog) {
         paintView.setBrushSize(((BrushPropsDialogue) dialogue).getBrushSize());
         setBrushShape(brushType);
+    }
+
+    public void onFavoriteClick(View view){
+        int color = ((ColorDrawable) view.getBackground()).getColor();
+        setSliderValues(color);
+        setSliderProgress();
+        ((SliderDialogue) dialogue).setPreview(color);
+    }
+
+    private void setSliderValues(int color){
+        ((SliderDialogue) dialogue).setRedValue((color >> 16) & 0xFF);
+        ((SliderDialogue) dialogue).setGreenValue((color >> 8) & 0xFF);
+        ((SliderDialogue) dialogue).setBlueValue((color >> 0) & 0xFF);
+    }
+
+    private void setSliderProgress(){
+        ((SeekBar)((SliderDialogue) dialogue).getView(R.id.Red)).setProgress(((SliderDialogue) dialogue).getRedValue());
+        ((SeekBar)((SliderDialogue) dialogue).getView(R.id.Blue)).setProgress(((SliderDialogue) dialogue).getBlueValue());
+        ((SeekBar)((SliderDialogue) dialogue).getView(R.id.Green)).setProgress(((SliderDialogue) dialogue).getGreenValue());
+
     }
 }

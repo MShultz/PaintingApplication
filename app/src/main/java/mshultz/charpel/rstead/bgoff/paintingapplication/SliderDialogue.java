@@ -45,6 +45,15 @@ public class SliderDialogue extends DialogFragment {
         return greenValue;
     }
 
+    public void setRedValue(int redValue){this.redValue = redValue;}
+    public void setBlueValue(int blueValue){this.blueValue = blueValue;}
+    public void setGreenValue(int greenValue){this.greenValue = greenValue;}
+
+    public SeekBar getRedSlider(){return redSlider;}
+    public SeekBar getBlueSlider(){return blueSlider;}
+    public SeekBar getGreenSlider(){return greenSlider;}
+
+
     public void setPreview(int color){
         ((ImageView)activity.findViewById(R.id.colorPrev)).setBackgroundColor(color);
     }

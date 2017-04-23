@@ -144,7 +144,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
 
                 <ImageView
                     android:id="@+id/pref2"
@@ -154,7 +154,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
 
                 <ImageView
                     android:id="@+id/pref3"
@@ -164,7 +164,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
 
                 <ImageView
                     android:id="@+id/pref4"
@@ -174,7 +174,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
             </TableRow>
 
             <TableRow
@@ -189,7 +189,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
 
                 <ImageView
                     android:id="@+id/pref6"
@@ -199,7 +199,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
 
                 <ImageView
                     android:id="@+id/pref7"
@@ -209,7 +209,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
 
                 <ImageView
                     android:id="@+id/pref8"
@@ -219,7 +219,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:onClick="onColorClick" />
+                    android:onClick="onFavoriteClick" />
             </TableRow>
 
         </TableLayout>
